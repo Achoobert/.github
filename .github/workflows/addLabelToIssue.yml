@@ -8,6 +8,18 @@ jobs:
   add-label:
     runs-on: ubuntu-latest
     steps:
+      - name: Check if Incident label exists
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/labels/Incident)
+          if [ $response == "404" ]; then
+            echo "Incident label not found"
+            exit 1
+          else
+            echo "Incident label found"
+            exit 0
+          fi
+        id: incident-label
+
       - name: Add High Priority and Incident labels
         if: ${{ steps.incident-label.outputs.label-exists == 'true' }}
         uses: actions-ecosystem/action-add-labels@v1.1.0
