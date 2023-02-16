@@ -3,32 +3,16 @@ name: Add Label to Issues
 on:
   issues:
     types: [opened, edited]
-
+    
 jobs:
   add-label:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if labels exist
-        run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/labels/Incident)
-          if [ $response == "404" ]; then
-            echo "Incident label not found"
-            echo "created=false" >> $GITHUB_ENV
-            labels=("High Priority,ff0000" "Medium Priority,ff9900" "Incident,000000")
-            for label in "${labels[@]}"; do
-              name=$(echo "$label" | cut -d',' -f1)
-              color=$(echo "$label" | cut -d',' -f2)
-              if ! github api -X GET /repos/${GITHUB_REPOSITORY}/labels/$name > /dev/null 2>&1; then
-                github api -X POST /repos/${GITHUB_REPOSITORY}/labels -F name="$name" -F color="$color"
-                echo "created=true" >> $GITHUB_ENV
-              fi
-            done
-            exit 0
-          else
-            echo "Incident label found"
-            exit 0
-          fi
-        id: incident-label
+      - name: Check if Incident label exists and add it
+        uses: Achoobert/createLabel@v1
+        with:
+          label_name: 'Incident'
+          label_color: '000000'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
