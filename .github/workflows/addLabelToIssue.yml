@@ -13,7 +13,17 @@ jobs:
           response=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/labels/Incident)
           if [ $response == "404" ]; then
             echo "Incident label not found"
-            exit 1
+            echo "::set-output name=created::false"
+            labels=("High Priority,ff0000" "Medium Priority,ff9900" "Incident,000000")
+            for label in "${labels[@]}"; do
+              name=$(echo "$label" | cut -d',' -f1)
+              color=$(echo "$label" | cut -d',' -f2)
+              if ! github api -X GET /repos/${GITHUB_REPOSITORY}/labels/$name > /dev/null 2>&1; then
+                github api -X POST /repos/${GITHUB_REPOSITORY}/labels -F name="$name" -F color="$color"
+                echo "::set-output name=created::true"
+              fi
+            done
+            exit 0
           else
             echo "Incident label found"
             exit 0
