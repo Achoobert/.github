@@ -9,9 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if Incident label exists and add it
-        uses: achoobert/createLabel@main
-      - name: Install dependencies
-        run: npm install
+      - uses: achoobert/createLabel@main
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
       - name: Check if Incident label exists and add it
         with:
           label_name: 'Incident'
