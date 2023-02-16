@@ -6,7 +6,7 @@ on:
     
 jobs:
   add-label:
-    uses: Achoobert/createLabel@v1
+    uses: createLabel
     runs-on: ubuntu-latest
     steps:
       - name: Check if Incident label exists and add it
