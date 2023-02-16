@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if Incident label exists and add it
-        uses: Achoobert/createLabel@v1
+        uses: Achoobert/.github/.github/workflows/createLabel.yml@main
         with:
           label_name: 'Incident'
           label_color: '000000'
