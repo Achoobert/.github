@@ -8,7 +8,7 @@ jobs:
   add-label:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.3.0
       - name: Add High Priority and Incident labels
         if: ${{ github.event.issue.state == 'open' && (contains(github.event.issue.body, 'The bug prevents users from completing critical tasks (e.g., saving data)') || contains(github.event.issue.body, 'The bug prevents users from completing some tasks')) }}
         uses: Achoobert/action-add-labels@main
