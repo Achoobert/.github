@@ -13,7 +13,6 @@ jobs:
         if: ${{ github.event.issue.state == 'open' && (contains(github.event.issue.body, 'The bug prevents users from completing critical tasks (e.g., saving data)') || contains(github.event.issue.body, 'The bug prevents users from completing some tasks')) }}
         uses: Achoobert/action-add-labels@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
             High Priority, Incident
       
@@ -21,6 +20,5 @@ jobs:
         if: ${{ github.event.issue.state == 'open' && contains(github.event.issue.body, 'The bug prevents users from completing some tasks') }}
         uses: Achoobert/action-add-labels@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
             Medium Priority, Incident
