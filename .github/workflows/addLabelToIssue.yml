@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Add High Priority and Incident labels
         if: ${{ github.event.issue.state == 'open' && (contains(github.event.issue.body, 'The bug prevents users from completing critical tasks (e.g., saving data)') || contains(github.event.issue.body, 'The bug prevents users from completing some tasks')) }}
-        uses: actions-ecosystem/action-add-labels@v1.1.0
+        uses: Achoobert/action-add-labels@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
@@ -18,7 +18,7 @@ jobs:
       
       - name: Add Medium Priority and Incident labels
         if: ${{ github.event.issue.state == 'open' && contains(github.event.issue.body, 'The bug prevents users from completing some tasks') }}
-        uses: actions-ecosystem/action-add-labels@v1.1.0
+        uses: Achoobert/action-add-labels@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
