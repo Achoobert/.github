@@ -9,16 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0
-      - name: Add High Priority and Incident labels
+      - uses: Achoobert/action-add-labels@main
         if: ${{ github.event.issue.state == 'open' && (contains(github.event.issue.body, 'The bug prevents users from completing critical tasks (e.g., saving data)') || contains(github.event.issue.body, 'The bug prevents users from completing some tasks')) }}
-        uses: Achoobert/action-add-labels@main
         with:
           labels: |
-            High Priority, Incident
+            High Priority
       
-      - name: Add Medium Priority and Incident labels
+      - uses: Achoobert/action-add-labels@main
         if: ${{ github.event.issue.state == 'open' && contains(github.event.issue.body, 'The bug prevents users from completing some tasks') }}
-        uses: Achoobert/action-add-labels@main
         with:
           labels: |
-            Medium Priority, Incident
+            Medium Priority
