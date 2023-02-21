@@ -8,17 +8,6 @@ jobs:
   add-label:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Check if Incident label exists and add it
-        uses: achoobert/createLabel@main
-        with:
-          label_name: 'Incident'
-          label_color: '000000'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Add High Priority and Incident labels
         if: ${{ steps.incident-label.outputs.label-exists == 'true' }}
         uses: actions-ecosystem/action-add-labels@v1.1.0
