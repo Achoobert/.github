@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.3.0
-      - uses: fdiskas/add-labels@patch-1
+      - uses: achoobert/action-add-labels@main
         if: ${{ github.event.issue.state == 'open' && (contains(github.event.issue.body, 'The bug prevents users from completing critical tasks (e.g., saving data)') || contains(github.event.issue.body, 'The bug prevents users from completing some tasks')) }}
         with:
           labels: |
@@ -18,7 +18,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       
-      - uses: christianvuerings/add-labels@v1.1
+      - uses: achoobert/action-add-labels@main
         if: ${{ github.event.issue.state == 'open' && contains(github.event.issue.body, 'The bug prevents users from completing some tasks') }}
         with:
           labels: |
