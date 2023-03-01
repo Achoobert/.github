@@ -18,6 +18,13 @@ jobs:
             High Priority
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create the Mattermost Message
+        run: |
+          echo "{\"text\":\"testing github action - someone created a issue that might be an incident :tada: Link: ${{ github.event.issue.html_url }}\"}" > mattermost.json
+      - uses: mattermost/action-mattermost-notify@master
+        if: ${{ github.event.issue.state == 'open' && (contains(github.event.issue.body, 'The bug prevents users from completing critical tasks (e.g., saving data)') || contains(github.event.issue.body, 'The bug prevents users from completing some tasks')) }}
+        env:
+          MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
 
       
       - uses: achoobert/action-add-labels@main
